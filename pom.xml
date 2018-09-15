@@ -210,7 +210,6 @@
         <configuration>
           <archive>
             <manifestEntries>
-              <Bundle-Version>${parsedVersion.osgiVersion}</Bundle-Version>
               <Bundle-Description>${project.description}</Bundle-Description>
               <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
               <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
@@ -218,7 +217,6 @@
             </manifestEntries>
             <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
           </archive>
-          <skipIfEmpty>true</skipIfEmpty>
         </configuration>
       </plugin>
  
@@ -302,7 +300,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-javadoc-plugin</artifactId>
-              <version>${javadoc-plugin.version}</version>
+              <version>2.10.4</version>
               <configuration>
                 <linkJavadoc>true</linkJavadoc>
                 <linksource>true</linksource>
@@ -393,6 +391,7 @@
       <id>license</id>
       <build>
         <plugins>
+          <!--
           <plugin>
             <groupId>com.google.code.maven-license-plugin</groupId>
             <artifactId>maven-license-plugin</artifactId>
@@ -414,6 +413,7 @@
               </headerDefinitions>
             </configuration>
           </plugin>
+          -->
         </plugins>
       </build>
 
@@ -431,7 +431,7 @@
         </pluginRepository>
       </pluginRepositories>
     </profile>
-
+    <!--
     <profile>
       <id>sign-artifacts</id>
       <build>
@@ -439,7 +439,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.1</version>
+            <version>1.4</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -453,7 +453,7 @@
         </plugins>
       </build>
     </profile>
-
+    -->
     <profile>
       <id>travis</id>
       <activation>

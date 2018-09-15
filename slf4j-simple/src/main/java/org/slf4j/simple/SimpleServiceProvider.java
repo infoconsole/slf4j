@@ -7,6 +7,9 @@ import org.slf4j.helpers.NOPMDCAdapter;
 import org.slf4j.spi.MDCAdapter;
 import org.slf4j.spi.SLF4JServiceProvider;
 
+/**
+ * @author oldflame-jm
+ */
 public class SimpleServiceProvider implements SLF4JServiceProvider {
 
     /**
@@ -14,24 +17,29 @@ public class SimpleServiceProvider implements SLF4JServiceProvider {
      * The value of this field is modified with each major release. 
      */
     // to avoid constant folding by the compiler, this field must *not* be final
-    public static String REQUESTED_API_VERSION = "1.8.99"; // !final
+    // !final
+    public static String REQUESTED_API_VERSION = "1.8.99";
 
     private ILoggerFactory loggerFactory; 
     private IMarkerFactory markerFactory;
     private MDCAdapter mdcAdapter;
                     
+    @Override
     public ILoggerFactory getLoggerFactory() {
         return loggerFactory;
     }
 
+    @Override
     public IMarkerFactory getMarkerFactory() {
         return markerFactory;
     }
 
+    @Override
     public MDCAdapter getMDCAdapter() {
         return mdcAdapter;
     }
 
+    @Override
     public String getRequesteApiVersion() {
         return REQUESTED_API_VERSION;
     }

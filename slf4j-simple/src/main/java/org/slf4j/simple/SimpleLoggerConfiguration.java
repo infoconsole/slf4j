@@ -70,8 +70,9 @@ public class SimpleLoggerConfiguration {
         loadProperties();
 
         String defaultLogLevelString = getStringProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, null);
-        if (defaultLogLevelString != null)
+        if (defaultLogLevelString != null) {
             defaultLogLevel = stringToLevel(defaultLogLevelString);
+        }
 
         showLogName = getBooleanProperty(SimpleLogger.SHOW_LOG_NAME_KEY, SimpleLoggerConfiguration.SHOW_LOG_NAME_DEFAULT);
         showShortLogName = getBooleanProperty(SimpleLogger.SHOW_SHORT_LOG_NAME_KEY, SHOW_SHORT_LOG_NAME_DEFAULT);
@@ -98,6 +99,7 @@ public class SimpleLoggerConfiguration {
     private void loadProperties() {
         // Add props from the resource simplelogger.properties
         InputStream in = AccessController.doPrivileged(new PrivilegedAction<InputStream>() {
+            @Override
             public InputStream run() {
                 ClassLoader threadCL = Thread.currentThread().getContextClassLoader();
                 if (threadCL != null) {
@@ -161,16 +163,18 @@ public class SimpleLoggerConfiguration {
     }
 
     private static OutputChoice computeOutputChoice(String logFile, boolean cacheOutputStream) {
-        if ("System.err".equalsIgnoreCase(logFile))
-            if (cacheOutputStream)
+        if ("System.err".equalsIgnoreCase(logFile)) {
+            if (cacheOutputStream) {
                 return new OutputChoice(OutputChoiceType.CACHED_SYS_ERR);
-            else
+            } else {
                 return new OutputChoice(OutputChoiceType.SYS_ERR);
-        else if ("System.out".equalsIgnoreCase(logFile)) {
-            if (cacheOutputStream)
+            }
+        } else if ("System.out".equalsIgnoreCase(logFile)) {
+            if (cacheOutputStream) {
                 return new OutputChoice(OutputChoiceType.CACHED_SYS_OUT);
-            else
+            } else {
                 return new OutputChoice(OutputChoiceType.SYS_OUT);
+            }
         } else {
             try {
                 FileOutputStream fos = new FileOutputStream(logFile);
