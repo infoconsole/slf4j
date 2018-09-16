@@ -121,6 +121,8 @@
     <xsd:complexType name="Filter">
         <xsd:choice maxOccurs="unbounded">
             <xsd:element name="level" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+            <xsd:element name="onMatch" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+            <xsd:element name="onMismatch" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
             <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:choice>
         <xsd:attribute name="class" type="xsd:string" use="optional"/>
@@ -152,6 +154,7 @@
             <xsd:element name="pattern" type="xsd:string"/>
         </xsd:sequence>
         <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="charset" type="xsd:string"/>
     </xsd:complexType>
 
     <xsd:complexType name="Root">
