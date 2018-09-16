@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://www.padual.com/java/logback.xsd"
+        xsi:="https://github.com/infoconsole/slf4j/blob/master/logback/logback.xsd"
         debug="false" scan="true" scanPeriod="30 second">
 
     <property name="PROJECT" value="iorder" />

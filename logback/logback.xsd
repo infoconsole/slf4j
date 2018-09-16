@@ -1,5 +1,5 @@
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://git.oschina.net/bilbodai/codes/d74sivrozqj8upmc591eb"
-            xmlns="http://git.oschina.net/bilbodai/codes/d74sivrozqj8upmc591eb" elementFormDefault="qualified">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mitix.com/logback/df66"
+            xmlns="http://www.mitix.com/logback/df66" elementFormDefault="qualified">
     <xsd:element name="configuration" type="Configuration"/>
     <xsd:element name="included" type="Configuration"/>
 
