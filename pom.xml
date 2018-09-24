@@ -64,6 +64,7 @@
     <module>slf4j-api</module>
     <module>slf4j-simple</module>
     <module>slf4j-log4j12</module>
+    <module>logback</module>
   </modules>
 
   <dependencies>

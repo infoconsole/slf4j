@@ -1,13 +1,13 @@
 /**
  * Logback: the reliable, generic, fast and flexible logging framework.
  * Copyright (C) 1999-2015, QOS.ch. All rights reserved.
- *
+ * <p>
  * This program and the accompanying materials are dual-licensed under
  * either the terms of the Eclipse Public License v1.0 as published by
  * the Eclipse Foundation
- *
- *   or (per the licensee's choosing)
- *
+ * <p>
+ * or (per the licensee's choosing)
+ * <p>
  * under the terms of the GNU Lesser General Public License version 2.1
  * as published by the Free Software Foundation.
  */
@@ -58,6 +58,12 @@ public class ContextInitializer {
         this.loggerContext = loggerContext;
     }
 
+    /**
+     * 根据xml文件设置内容
+     *
+     * @param url
+     * @throws JoranException
+     */
     public void configureByResource(URL url) throws JoranException {
         if (url == null) {
             throw new IllegalArgumentException("URL argument cannot be null");
@@ -71,7 +77,7 @@ public class ContextInitializer {
 
                 StatusManager sm = loggerContext.getStatusManager();
                 sm.add(new ErrorStatus("Groovy configuration disabled due to Java 9 compilation issues.", loggerContext));
-                
+
             } else {
                 StatusManager sm = loggerContext.getStatusManager();
                 sm.add(new ErrorStatus("Groovy classes are not available on the class path. ABORTING INITIALIZATION.", loggerContext));
@@ -163,7 +169,7 @@ public class ContextInitializer {
                     c.configure(loggerContext);
                 } catch (Exception e) {
                     throw new LogbackException(String.format("Failed to initialize Configurator: %s using ServiceLoader", c != null ? c.getClass()
-                                    .getCanonicalName() : "null"), e);
+                            .getCanonicalName() : "null"), e);
                 }
             } else {
                 BasicConfigurator basicConfigurator = new BasicConfigurator();

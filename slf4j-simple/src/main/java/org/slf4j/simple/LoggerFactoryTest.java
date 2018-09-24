@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LoggerFactoryTest {
     public static void main(String[] args) {
-        Logger logger = LoggerFactory.getLogger("LoggerFactoryTest");
+        Logger logger = LoggerFactory.getLogger(LoggerFactoryTest.class);
         logger.info("hello slf4j {}", "mitix");
     }
 }

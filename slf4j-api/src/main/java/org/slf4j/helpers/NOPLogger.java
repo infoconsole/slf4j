@@ -51,6 +51,7 @@ public class NOPLogger extends MarkerIgnoringBase {
     /**
      * Always returns the string value "NOP".
      */
+    @Override
     public String getName() {
         return "NOP";
     }

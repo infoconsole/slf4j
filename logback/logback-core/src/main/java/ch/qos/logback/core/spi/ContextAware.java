@@ -20,11 +20,22 @@ import ch.qos.logback.core.status.Status;
  * An object which has a context and add methods for updating internal status messages.
  */
 public interface ContextAware {
-
+    /**
+     * 设置context
+     * @param context
+     */
     void setContext(Context context);
 
+    /**
+     * 获取context
+     * @return context
+     */
     Context getContext();
 
+    /**
+     * 设置status
+     * @param status
+     */
     void addStatus(Status status);
 
     void addInfo(String msg);

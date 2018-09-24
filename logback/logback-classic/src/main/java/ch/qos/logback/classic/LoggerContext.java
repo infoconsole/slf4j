@@ -1,13 +1,13 @@
 /**
  * Logback: the reliable, generic, fast and flexible logging framework.
  * Copyright (C) 1999-2015, QOS.ch. All rights reserved.
- *
+ * <p>
  * This program and the accompanying materials are dual-licensed under
  * either the terms of the Eclipse Public License v1.0 as published by
  * the Eclipse Foundation
- *
- *   or (per the licensee's choosing)
- *
+ * <p>
+ * or (per the licensee's choosing)
+ * <p>
  * under the terms of the GNU Lesser General Public License version 2.1
  * as published by the Free Software Foundation.
  */
@@ -53,21 +53,26 @@ import ch.qos.logback.core.status.WarnStatus;
  */
 public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCycle {
 
-    /** Default setting of packaging data in stack traces */
+    /**
+     * Default setting of packaging data in stack traces
+     */
     public static final boolean DEFAULT_PACKAGING_DATA = false;
-
+    //跟节点
     final Logger root;
+    //记录节点size
     private int size;
+
     private int noAppenderWarning = 0;
     final private List<LoggerContextListener> loggerContextListenerList = new ArrayList<LoggerContextListener>();
-
+    //logger name Logger的map
     private Map<String, Logger> loggerCache;
 
     private LoggerContextVO loggerContextRemoteView;
     private final TurboFilterList turboFilterList = new TurboFilterList();
     private boolean packagingDataEnabled = DEFAULT_PACKAGING_DATA;
-    SequenceNumberGenerator sequenceNumberGenerator = null; // by default there is no SequenceNumberGenerator
-    
+    // by default there is no SequenceNumberGenerator
+    SequenceNumberGenerator sequenceNumberGenerator = null;
+
     private int maxCallerDataDepth = ClassicConstants.DEFAULT_MAX_CALLEDER_DATA_DEPTH;
 
     int resetCount = 0;
@@ -75,7 +80,7 @@ public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCy
 
     public LoggerContext() {
         super();
-        this.loggerCache = new ConcurrentHashMap<String, Logger>();
+        this.loggerCache = new ConcurrentHashMap<>();
 
         this.loggerContextRemoteView = new LoggerContextVO(this);
         this.root = new Logger(Logger.ROOT_LOGGER_NAME, null, this);
@@ -231,7 +236,7 @@ public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCy
     }
 
     private void cancelScheduledTasks() {
-        for(ScheduledFuture<?> sf: scheduledFutures) {
+        for (ScheduledFuture<?> sf : scheduledFutures) {
             sf.cancel(false);
         }
         scheduledFutures.clear();
@@ -264,7 +269,7 @@ public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCy
     }
 
     final FilterReply getTurboFilterChainDecision_0_3OrMore(final Marker marker, final Logger logger, final Level level, final String format,
-                    final Object[] params, final Throwable t) {
+                                                            final Object[] params, final Throwable t) {
         if (turboFilterList.size() == 0) {
             return FilterReply.NEUTRAL;
         }
@@ -272,19 +277,19 @@ public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCy
     }
 
     final FilterReply getTurboFilterChainDecision_1(final Marker marker, final Logger logger, final Level level, final String format, final Object param,
-                    final Throwable t) {
+                                                    final Throwable t) {
         if (turboFilterList.size() == 0) {
             return FilterReply.NEUTRAL;
         }
-        return turboFilterList.getTurboFilterChainDecision(marker, logger, level, format, new Object[] { param }, t);
+        return turboFilterList.getTurboFilterChainDecision(marker, logger, level, format, new Object[]{param}, t);
     }
 
     final FilterReply getTurboFilterChainDecision_2(final Marker marker, final Logger logger, final Level level, final String format, final Object param1,
-                    final Object param2, final Throwable t) {
+                                                    final Object param2, final Throwable t) {
         if (turboFilterList.size() == 0) {
             return FilterReply.NEUTRAL;
         }
-        return turboFilterList.getTurboFilterChainDecision(marker, logger, level, format, new Object[] { param1, param2 }, t);
+        return turboFilterList.getTurboFilterChainDecision(marker, logger, level, format, new Object[]{param1, param2}, t);
     }
 
     // === start listeners ==============================================
@@ -379,6 +384,7 @@ public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCy
         return frameworkPackages;
     }
 
+    @Override
     public SequenceNumberGenerator getSequenceNumberGenerator() {
         return null;
     }

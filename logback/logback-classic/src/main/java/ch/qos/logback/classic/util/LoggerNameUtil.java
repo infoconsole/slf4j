@@ -36,16 +36,23 @@ public class LoggerNameUtil {
      * @return
      */
     public static int getSeparatorIndexOf(String name, int fromIndex) {
+        //.
         int dotIndex = name.indexOf(CoreConstants.DOT, fromIndex);
+        //$
         int dollarIndex = name.indexOf(CoreConstants.DOLLAR, fromIndex);
-
-        if (dotIndex == -1 && dollarIndex == -1)
+        //没有包名，不是代理
+        if (dotIndex == -1 && dollarIndex == -1) {
             return -1;
-        if (dotIndex == -1)
+        }
+        //没有包名
+        if (dotIndex == -1) {
             return dollarIndex;
-        if (dollarIndex == -1)
+        }
+        //如果没有
+        if (dollarIndex == -1) {
             return dotIndex;
-
+        }
+        //返回小的那个
         return dotIndex < dollarIndex ? dotIndex : dollarIndex;
     }
 

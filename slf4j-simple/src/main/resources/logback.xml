@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:="https://github.com/infoconsole/slf4j/blob/master/logback/logback.xsd"
-        debug="false" scan="true" scanPeriod="30 second" xmlns="http://www.mitix.com/logback/df66">
+        debug="false" scan="true" scanPeriod="30 second">
 
-    <property name="PROJECT" value="iorder"/>
+    <property name="PROJECT" value="slf4j"/>
     <property name="ROOT" value="logs/${PROJECT}/"/>
     <property name="FILESIZE" value="50MB"/>
     <property name="MAXHISTORY" value="100"/>
@@ -38,6 +36,7 @@
     </appender>
 
     <!-- WARN 输入到文件，按日期和文件大小 -->
+    <!--
     <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder charset="utf-8">
             <pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} - %m%n
@@ -56,7 +55,7 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
-
+    -->
     <!-- INFO 输入到文件，按日期和文件大小 -->
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder charset="utf-8">
@@ -97,6 +96,7 @@
         </rollingPolicy>
     </appender>
     <!-- TRACE 输入到文件，按日期和文件大小 -->
+    <!--
     <appender name="TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder charset="utf-8">
             <pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} - %m%n
@@ -117,7 +117,7 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
-
+    -->
     <!-- SQL相关日志输出-->
     <logger name="org.apache.ibatis" level="INFO" additivity="false"/>
     <logger name="org.mybatis.spring" level="INFO" additivity="false"/>

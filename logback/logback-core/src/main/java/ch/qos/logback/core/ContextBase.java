@@ -1,13 +1,13 @@
 /**
  * Logback: the reliable, generic, fast and flexible logging framework.
  * Copyright (C) 1999-2015, QOS.ch. All rights reserved.
- *
+ * <p>
  * This program and the accompanying materials are dual-licensed under
  * either the terms of the Eclipse Public License v1.0 as published by
  * the Eclipse Foundation
- *
- *   or (per the licensee's choosing)
- *
+ * <p>
+ * or (per the licensee's choosing)
+ * <p>
  * under the terms of the GNU Lesser General Public License version 2.1
  * as published by the Free Software Foundation.
  */
@@ -35,15 +35,18 @@ import ch.qos.logback.core.util.ExecutorServiceUtil;
 import ch.qos.logback.core.util.NetworkAddressUtil;
 
 public class ContextBase implements Context, LifeCycle {
-
+    //容器生成时间
     private long birthTime = System.currentTimeMillis();
-
+    //Context的名字
     private String name;
     private StatusManager sm = new BasicStatusManager();
     // TODO propertyMap should be observable so that we can be notified
     // when it changes so that a new instance of propertyMap can be
     // serialized. For the time being, we ignore this shortcoming.
     Map<String, String> propertyMap = new HashMap<String, String>();
+    /**
+     * SAFE_JORAN_CONFIGURATION ArrayList 原始的配置读取项
+     */
     Map<String, Object> objectMap = new HashMap<String, Object>();
 
     LogbackLock configurationLock = new LogbackLock();
@@ -52,7 +55,7 @@ public class ContextBase implements Context, LifeCycle {
     protected List<ScheduledFuture<?>> scheduledFutures = new ArrayList<ScheduledFuture<?>>(1);
     private LifeCycleManager lifeCycleManager;
     private SequenceNumberGenerator sequenceNumberGenerator;
-  
+
 
     private boolean started;
 
@@ -60,6 +63,7 @@ public class ContextBase implements Context, LifeCycle {
         initCollisionMaps();
     }
 
+    @Override
     public StatusManager getStatusManager() {
         return sm;
     }
@@ -68,7 +72,7 @@ public class ContextBase implements Context, LifeCycle {
      * Set the {@link StatusManager} for this context. Note that by default this
      * context is initialized with a {@link BasicStatusManager}. A null value for
      * the 'statusManager' argument is not allowed.
-     * 
+     *
      * <p> A malicious attacker can set the status manager to a dummy instance,
      * disabling internal error reporting.
      *
@@ -82,10 +86,12 @@ public class ContextBase implements Context, LifeCycle {
         this.sm = statusManager;
     }
 
+    @Override
     public Map<String, String> getCopyOfPropertyMap() {
         return new HashMap<String, String>(propertyMap);
     }
 
+    @Override
     public void putProperty(String key, String val) {
         if (HOSTNAME_KEY.equalsIgnoreCase(key)) {
             putHostnameProperty(val);
@@ -106,9 +112,11 @@ public class ContextBase implements Context, LifeCycle {
      * @param key
      * @return
      */
+    @Override
     public String getProperty(String key) {
-        if (CONTEXT_NAME_KEY.equals(key))
+        if (CONTEXT_NAME_KEY.equals(key)) {
             return getName();
+        }
         if (HOSTNAME_KEY.equalsIgnoreCase(key)) {
             return lazyGetHostname();
         }
@@ -134,10 +142,12 @@ public class ContextBase implements Context, LifeCycle {
         }
     }
 
+    @Override
     public Object getObject(String key) {
         return objectMap.get(key);
     }
 
+    @Override
     public void putObject(String key, Object value) {
         objectMap.put(key, value);
     }
@@ -146,10 +156,12 @@ public class ContextBase implements Context, LifeCycle {
         objectMap.remove(key);
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void start() {
         // We'd like to create the executor service here, but we can't;
         // ContextBase has not always implemented LifeCycle and there are *many*
@@ -157,6 +169,7 @@ public class ContextBase implements Context, LifeCycle {
         started = true;
     }
 
+    @Override
     public void stop() {
         // We don't check "started" here, because the executor service uses
         // lazy initialization, rather than being created in the start method
@@ -165,6 +178,7 @@ public class ContextBase implements Context, LifeCycle {
         started = false;
     }
 
+    @Override
     public boolean isStarted() {
         return started;
     }
@@ -188,6 +202,7 @@ public class ContextBase implements Context, LifeCycle {
      *
      * @throws IllegalStateException if the context already has a name, other than "default".
      */
+    @Override
     public void setName(String name) throws IllegalStateException {
         if (name != null && name.equals(this.name)) {
             return; // idempotent naming
@@ -199,10 +214,12 @@ public class ContextBase implements Context, LifeCycle {
         }
     }
 
+    @Override
     public long getBirthTime() {
         return birthTime;
     }
 
+    @Override
     public Object getConfigurationLock() {
         return configurationLock;
     }
@@ -243,6 +260,7 @@ public class ContextBase implements Context, LifeCycle {
         }
     }
 
+    @Override
     public void register(LifeCycle component) {
         getLifeCycleManager().register(component);
     }
@@ -251,13 +269,13 @@ public class ContextBase implements Context, LifeCycle {
      * Gets the life cycle manager for this context.
      * <p>
      * The default implementation lazily initializes an instance of
-     * {@link LifeCycleManager}.  Subclasses may override to provide a custom 
+     * {@link LifeCycleManager}.  Subclasses may override to provide a custom
      * manager implementation, but must take care to return the same manager
      * object for each call to this method.
      * <p>
      * This is exposed primarily to support instrumentation for unit testing.
-     * 
-     * @return manager object 
+     *
+     * @return manager object
      */
     synchronized LifeCycleManager getLifeCycleManager() {
         if (lifeCycleManager == null) {
@@ -279,7 +297,7 @@ public class ContextBase implements Context, LifeCycle {
     public List<ScheduledFuture<?>> getScheduledFutures() {
         return new ArrayList<ScheduledFuture<?>>(scheduledFutures);
     }
-    
+
     public SequenceNumberGenerator getSequenceNumberGenerator() {
         return sequenceNumberGenerator;
     }

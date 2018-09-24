@@ -61,6 +61,7 @@ public class SubstituteLogger implements Logger {
         this.createdPostInitialization = createdPostInitialization;
     }
 
+    @Override
     public String getName() {
         return name;
     }

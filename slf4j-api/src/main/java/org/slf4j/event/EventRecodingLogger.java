@@ -18,6 +18,7 @@ public class EventRecodingLogger implements Logger {
         this.eventQueue = eventQueue;
     }
 
+    @Override
     public String getName() {
         return name;
     }

@@ -1,13 +1,13 @@
 /**
  * Logback: the reliable, generic, fast and flexible logging framework.
  * Copyright (C) 1999-2015, QOS.ch. All rights reserved.
- *
+ * <p>
  * This program and the accompanying materials are dual-licensed under
  * either the terms of the Eclipse Public License v1.0 as published by
  * the Eclipse Foundation
- *
- *   or (per the licensee's choosing)
- *
+ * <p>
+ * or (per the licensee's choosing)
+ * <p>
  * under the terms of the GNU Lesser General Public License version 2.1
  * as published by the Free Software Foundation.
  */
@@ -22,14 +22,14 @@ import ch.qos.logback.classic.LoggerContext;
  * LoggerContextVO offers a restricted view of LoggerContext intended to be
  * exposed by LoggingEvent to remote systems. This restricted view is optimized
  * for serialization.
- * 
+ *
  * <p>
  * Some of the LoggerContext or Logger attributes MUST not survive
  * serialization, e.g appenders, level values etc, as these attributes may have
  * other values on the remote platform. LoggerContextVO class exposes the
  * minimal and relevant attributes to the remote host, instead of having to deal
  * with an incomplete LoggerContext with many null references.
- * 
+ *
  * @author Ceki G&uuml;lc&uuml;
  * @author S&eacute;bastien Pennec
  */
@@ -72,19 +72,24 @@ public class LoggerContextVO implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (!(o instanceof LoggerContextVO))
+        }
+        if (!(o instanceof LoggerContextVO)) {
             return false;
+        }
 
         LoggerContextVO that = (LoggerContextVO) o;
 
-        if (birthTime != that.birthTime)
+        if (birthTime != that.birthTime) {
             return false;
-        if (name != null ? !name.equals(that.name) : that.name != null)
+        }
+        if (name != null ? !name.equals(that.name) : that.name != null) {
             return false;
-        if (propertyMap != null ? !propertyMap.equals(that.propertyMap) : that.propertyMap != null)
+        }
+        if (propertyMap != null ? !propertyMap.equals(that.propertyMap) : that.propertyMap != null) {
             return false;
+        }
 
         return true;
     }

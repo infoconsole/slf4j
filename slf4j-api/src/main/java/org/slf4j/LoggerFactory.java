@@ -83,6 +83,7 @@ public final class LoggerFactory {
     //ongoing  正在初始化
     static final int ONGOING_INITIALIZATION = 1;
     static final int FAILED_INITIALIZATION = 2;
+    //成功初始化  在加载PROVIDER成功以后执行
     static final int SUCCESSFUL_INITIALIZATION = 3;
     static final int NOP_FALLBACK_INITIALIZATION = 4;
     //默认启动的时候是未初始化的  volatile内存可见性  作为标记使用
@@ -161,6 +162,7 @@ public final class LoggerFactory {
                 PROVIDER.initialize();
                 INITIALIZATION_STATE = SUCCESSFUL_INITIALIZATION;
                 reportActualBinding(providersList);
+                //找到一个默认替代的Loggers
                 fixSubstituteLoggers();
                 replayEvents();
                 // release all resources in SUBST_FACTORY
@@ -244,12 +246,14 @@ public final class LoggerFactory {
         List<SubstituteLoggingEvent> eventList = new ArrayList<SubstituteLoggingEvent>(maxDrain);
         while (true) {
             int numDrained = queue.drainTo(eventList, maxDrain);
-            if (numDrained == 0)
+            if (numDrained == 0) {
                 break;
+            }
             for (SubstituteLoggingEvent event : eventList) {
                 replaySingleEvent(event);
-                if (count++ == 0)
+                if (count++ == 0) {
                     emitReplayOrSubstituionWarning(event, queueSize);
+                }
             }
             eventList.clear();
         }
@@ -306,6 +310,7 @@ public final class LoggerFactory {
             for (String aAPI_COMPATIBILITY_LIST : API_COMPATIBILITY_LIST) {
                 if (requested.startsWith(aAPI_COMPATIBILITY_LIST)) {
                     match = true;
+                    break;
                 }
             }
             if (!match) {

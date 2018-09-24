@@ -37,6 +37,9 @@ import ch.qos.logback.core.spi.ContextAware;
 import ch.qos.logback.core.spi.ContextAwareImpl;
 import ch.qos.logback.core.status.Status;
 
+/**
+ * @author oldflame-jm
+ */
 public class SaxEventRecorder extends DefaultHandler implements ContextAware {
 
     final ContextAwareImpl cai;
@@ -87,6 +90,7 @@ public class SaxEventRecorder extends DefaultHandler implements ContextAware {
         }
     }
 
+    @Override
     public void startDocument() {
     }
 
@@ -94,10 +98,12 @@ public class SaxEventRecorder extends DefaultHandler implements ContextAware {
         return locator;
     }
 
+    @Override
     public void setDocumentLocator(Locator l) {
         locator = l;
     }
 
+    @Override
     public void startElement(String namespaceURI, String localName, String qName, Attributes atts) {
 
         String tagName = getTagName(localName, qName);
@@ -106,8 +112,10 @@ public class SaxEventRecorder extends DefaultHandler implements ContextAware {
         saxEventList.add(new StartEvent(current, namespaceURI, localName, qName, atts, getLocator()));
     }
 
+    @Override
     public void characters(char[] ch, int start, int length) {
         String bodyStr = new String(ch, start, length);
+        //获取上一个解析的Event  如果上一个还是BodyEvent  那就是把内容拼进去
         SaxEvent lastEvent = getLastEvent();
         if (lastEvent instanceof BodyEvent) {
             BodyEvent be = (BodyEvent) lastEvent;
@@ -133,6 +141,7 @@ public class SaxEventRecorder extends DefaultHandler implements ContextAware {
         return saxEventList.get(size - 1);
     }
 
+    @Override
     public void endElement(String namespaceURI, String localName, String qName) {
         saxEventList.add(new EndEvent(namespaceURI, localName, qName, getLocator()));
         globalElementPath.pop();
@@ -146,53 +155,65 @@ public class SaxEventRecorder extends DefaultHandler implements ContextAware {
         return tagName;
     }
 
+    @Override
     public void error(SAXParseException spe) throws SAXException {
         addError(XML_PARSING + " - Parsing error on line " + spe.getLineNumber() + " and column " + spe.getColumnNumber());
         addError(spe.toString());
         
     }
 
+    @Override
     public void fatalError(SAXParseException spe) throws SAXException {
         addError(XML_PARSING + " - Parsing fatal error on line " + spe.getLineNumber() + " and column " + spe.getColumnNumber());
         addError(spe.toString());
     }
 
+    @Override
     public void warning(SAXParseException spe) throws SAXException {
         addWarn(XML_PARSING + " - Parsing warning on line " + spe.getLineNumber() + " and column " + spe.getColumnNumber(), spe);
     }
 
+    @Override
     public void addError(String msg) {
         cai.addError(msg);
     }
 
+    @Override
     public void addError(String msg, Throwable ex) {
         cai.addError(msg, ex);
     }
 
+    @Override
     public void addInfo(String msg) {
         cai.addInfo(msg);
     }
 
+    @Override
     public void addInfo(String msg, Throwable ex) {
         cai.addInfo(msg, ex);
     }
 
+    @Override
     public void addStatus(Status status) {
         cai.addStatus(status);
     }
 
+    @Override
     public void addWarn(String msg) {
         cai.addWarn(msg);
     }
 
+    @Override
     public void addWarn(String msg, Throwable ex) {
         cai.addWarn(msg, ex);
     }
 
+    @Override
     public Context getContext() {
         return cai.getContext();
     }
 
+    @Override
     public void setContext(Context context) {
         cai.setContext(context);
     }

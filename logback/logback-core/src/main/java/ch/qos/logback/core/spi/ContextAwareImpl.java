@@ -42,6 +42,7 @@ public class ContextAwareImpl implements ContextAware {
         return origin;
     }
 
+    @Override
     public void setContext(Context context) {
         if (this.context == null) {
             this.context = context;
@@ -50,6 +51,7 @@ public class ContextAwareImpl implements ContextAware {
         }
     }
 
+    @Override
     public Context getContext() {
         return this.context;
     }

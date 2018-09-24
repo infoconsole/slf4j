@@ -95,6 +95,7 @@ public class LogbackMDCAdapter implements MDCAdapter {
      *
      * @throws IllegalArgumentException in case the "key" parameter is null
      */
+    @Override
     public void put(String key, String val) throws IllegalArgumentException {
         if (key == null) {
             throw new IllegalArgumentException("key cannot be null");
@@ -115,13 +116,15 @@ public class LogbackMDCAdapter implements MDCAdapter {
      * Remove the the context identified by the <code>key</code> parameter.
      * <p/>
      */
+    @Override
     public void remove(String key) {
         if (key == null) {
             return;
         }
         Map<String, String> oldMap = copyOnThreadLocal.get();
-        if (oldMap == null)
+        if (oldMap == null) {
             return;
+        }
 
         Integer lastOp = getAndSetLastOperation(WRITE_OPERATION);
 
@@ -136,6 +139,7 @@ public class LogbackMDCAdapter implements MDCAdapter {
     /**
      * Clear all entries in the MDC.
      */
+    @Override
     public void clear() {
         lastOperation.set(WRITE_OPERATION);
         copyOnThreadLocal.remove();
@@ -145,6 +149,7 @@ public class LogbackMDCAdapter implements MDCAdapter {
      * Get the context identified by the <code>key</code> parameter.
      * <p/>
      */
+    @Override
     public String get(String key) {
         final Map<String, String> map = copyOnThreadLocal.get();
         if ((map != null) && (key != null)) {
@@ -181,6 +186,7 @@ public class LogbackMDCAdapter implements MDCAdapter {
      * Return a copy of the current thread's context map. Returned value may be
      * null.
      */
+    @Override
     public Map<String, String> getCopyOfContextMap() {
         Map<String, String> hashMap = copyOnThreadLocal.get();
         if (hashMap == null) {
@@ -190,6 +196,7 @@ public class LogbackMDCAdapter implements MDCAdapter {
         }
     }
 
+    @Override
     public void setContextMap(Map<String, String> contextMap) {
         lastOperation.set(WRITE_OPERATION);
 

@@ -154,9 +154,11 @@ public abstract class GenericConfigurator extends ContextAwareBase {
         StatusUtil statusUtil = new StatusUtil(context);
         if (statusUtil.noXMLParsingErrorsOccurred(threshold)) {
             addInfo("Registering current configuration as safe fallback point");
+            //注册信息
             registerSafeConfiguration(recorder.saxEventList);
         }
     }
+
 
     public void doConfigure(final List<SaxEvent> eventList) throws JoranException {
         buildInterpreter();

@@ -27,6 +27,7 @@ public class LoggerContextAwareBase extends ContextAwareBase implements LoggerCo
         super.setContext(context);
     }
 
+    @Override
     public void setContext(Context context) {
         // check that the context is of type LoggerContext. Otherwise, throw an exception
         // Context == null is a degenerate case but nonetheless permitted.
