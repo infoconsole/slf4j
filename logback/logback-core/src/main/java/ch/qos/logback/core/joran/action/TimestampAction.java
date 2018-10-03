@@ -59,8 +59,9 @@ public class TimestampAction extends Action {
             addInfo("Using current interpretation time, i.e. now, as time reference.");
         }
 
-        if (inError)
+        if (inError) {
             return;
+        }
 
         String scopeStr = attributes.getValue(SCOPE_ATTRIBUTE);
         Scope scope = ActionUtil.stringToScope(scopeStr);
@@ -69,6 +70,7 @@ public class TimestampAction extends Action {
         String val = sdf.format(timeReference);
 
         addInfo("Adding property to the context with key=\"" + keyStr + "\" and value=\"" + val + "\" to the " + scope + " scope");
+        //DATETIME  system.courrent
         ActionUtil.setProperty(ec, keyStr, val, scope);
     }
 

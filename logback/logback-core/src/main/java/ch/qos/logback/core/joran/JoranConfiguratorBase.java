@@ -56,8 +56,9 @@ abstract public class JoranConfiguratorBase<E> extends GenericConfigurator {
 
         // is "configuration/variable" referenced in the docs?
         rs.addRule(new ElementSelector("configuration/variable"), new PropertyAction());
+        //
         rs.addRule(new ElementSelector("configuration/property"), new PropertyAction());
-
+        //这个好像没用
         rs.addRule(new ElementSelector("configuration/substitutionProperty"), new PropertyAction());
 
         rs.addRule(new ElementSelector("configuration/timestamp"), new TimestampAction());
@@ -69,7 +70,7 @@ abstract public class JoranConfiguratorBase<E> extends GenericConfigurator {
         rs.addRule(new ElementSelector("configuration/contextProperty"), new ContextPropertyAction());
 
         rs.addRule(new ElementSelector("configuration/conversionRule"), new ConversionRuleAction());
-
+        //设置状态监听
         rs.addRule(new ElementSelector("configuration/statusListener"), new StatusListenerAction());
 
         rs.addRule(new ElementSelector("configuration/appender"), new AppenderAction<E>());

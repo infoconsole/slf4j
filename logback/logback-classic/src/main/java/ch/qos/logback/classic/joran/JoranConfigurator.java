@@ -1,13 +1,13 @@
 /**
  * Logback: the reliable, generic, fast and flexible logging framework.
  * Copyright (C) 1999-2015, QOS.ch. All rights reserved.
- *
+ * <p>
  * This program and the accompanying materials are dual-licensed under
  * either the terms of the Eclipse Public License v1.0 as published by
  * the Eclipse Foundation
- *
- *   or (per the licensee's choosing)
- *
+ * <p>
+ * or (per the licensee's choosing)
+ * <p>
  * under the terms of the GNU Lesser General Public License version 2.1
  * as published by the Free Software Foundation.
  */
@@ -40,7 +40,7 @@ public class JoranConfigurator extends JoranConfiguratorBase<ILoggingEvent> {
     public void addInstanceRules(RuleStore rs) {
         // parent rules already added
         super.addInstanceRules(rs);
-
+        //configuration 规则
         rs.addRule(new ElementSelector("configuration"), new ConfigurationAction());
 
         rs.addRule(new ElementSelector("configuration/contextName"), new ContextNameAction());
@@ -50,12 +50,15 @@ public class JoranConfigurator extends JoranConfiguratorBase<ILoggingEvent> {
 
         rs.addRule(new ElementSelector("configuration/appender/sift"), new SiftAction());
         rs.addRule(new ElementSelector("configuration/appender/sift/*"), new NOPAction());
-
+        //解析logger节点，然后设置树结构点的Logger的日志
         rs.addRule(new ElementSelector("configuration/logger"), new LoggerAction());
+        //设置logger的级别，应该优先级比属性高，不建议使用
         rs.addRule(new ElementSelector("configuration/logger/level"), new LevelAction());
-
+        //root<Logger>节点的解析
         rs.addRule(new ElementSelector("configuration/root"), new RootLoggerAction());
+        //设置root<Logger>的级别，应该优先级比属性高，不建议使用
         rs.addRule(new ElementSelector("configuration/root/level"), new LevelAction());
+        //设置appender列表，需要在configuration/appender后面做解析
         rs.addRule(new ElementSelector("configuration/logger/appender-ref"), new AppenderRefAction<ILoggingEvent>());
         rs.addRule(new ElementSelector("configuration/root/appender-ref"), new AppenderRefAction<ILoggingEvent>());
 

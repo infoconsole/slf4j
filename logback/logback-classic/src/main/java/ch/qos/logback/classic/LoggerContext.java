@@ -126,6 +126,7 @@ public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCy
             throw new IllegalArgumentException("name argument cannot be null");
         }
 
+        //如果是root 则使用的事跟节点
         // if we are asking for the root logger, then let us return it without
         // wasting time
         if (Logger.ROOT_LOGGER_NAME.equalsIgnoreCase(name)) {

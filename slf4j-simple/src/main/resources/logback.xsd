@@ -4,7 +4,6 @@
 
     <xsd:complexType name="Configuration">
         <xsd:choice maxOccurs="unbounded">
-            <xsd:element name="root" minOccurs="0" maxOccurs="1" type="Root"/>
             <xsd:element name="statusListener" minOccurs="0" maxOccurs="unbounded" type="StatusListener"/>
             <xsd:element name="contextListener" minOccurs="0" maxOccurs="unbounded" type="ContextListener"/>
             <xsd:element name="include" minOccurs="0" maxOccurs="unbounded" type="Include"/>
@@ -15,6 +14,7 @@
             <xsd:element name="property" minOccurs="0" maxOccurs="unbounded" type="Property"/>
             <xsd:element name="appender" minOccurs="0" maxOccurs="unbounded" type="Appender"/>
             <xsd:element name="logger" minOccurs="0" maxOccurs="unbounded" type="Logger"/>
+            <xsd:element name="root" minOccurs="0" maxOccurs="1" type="Root"/>
             <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:choice>
         <xsd:attribute name="debug" type="xsd:boolean" use="optional"/>
@@ -66,7 +66,8 @@
             <xsd:element name="maxHistory" minOccurs="0" maxOccurs="1" type="xsd:int"/>
             <xsd:element name="minIndex" minOccurs="0" maxOccurs="1" type="xsd:int"/>
             <xsd:element name="maxIndex" minOccurs="0" maxOccurs="1" type="xsd:int"/>
-            <xsd:element name="timeBasedFileNamingAndTriggeringPolicy" minOccurs="0" maxOccurs="1" type="TriggeringPolicy"/>
+            <xsd:element name="timeBasedFileNamingAndTriggeringPolicy" minOccurs="0" maxOccurs="1"
+                         type="TriggeringPolicy"/>
             <xsd:element name="cleanHistoryOnStart" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
         </xsd:choice>
         <xsd:attribute name="class" type="xsd:string" use="required"/>
@@ -108,8 +109,8 @@
             <xsd:element name="prudent" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
             <xsd:element name="layout" minOccurs="0" maxOccurs="1" type="Layout"/>
             <xsd:element name="rollingPolicy" minOccurs="0" maxOccurs="1" type="RollingPolicy"/>
-            <xsd:element name="connectionSource" minOccurs="0" maxOccurs="1" type="ConnectionSource" />
-            <xsd:element name="triggeringPolicy" minOccurs="0" maxOccurs="1" type="TriggeringPolicy" />
+            <xsd:element name="connectionSource" minOccurs="0" maxOccurs="1" type="ConnectionSource"/>
+            <xsd:element name="triggeringPolicy" minOccurs="0" maxOccurs="1" type="TriggeringPolicy"/>
             <xsd:any namespace="##other" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:choice>
         <xsd:attribute name="name" type="xsd:string" use="required"/>
@@ -203,11 +204,11 @@
 
     <xsd:complexType name="ConnectionSource">
         <xsd:sequence>
-            <xsd:element name="driverClass" type="xsd:string" />
-            <xsd:element name="url" type="xsd:string" />
-            <xsd:element name="user" type="xsd:string" />
-            <xsd:element name="password" type="xsd:string" />
+            <xsd:element name="driverClass" type="xsd:string"/>
+            <xsd:element name="url" type="xsd:string"/>
+            <xsd:element name="user" type="xsd:string"/>
+            <xsd:element name="password" type="xsd:string"/>
         </xsd:sequence>
-        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="class" type="xsd:string" use="required"/>
     </xsd:complexType>
 </xsd:schema>

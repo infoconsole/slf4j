@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration
-        debug="false" scan="true" scanPeriod="30 second">
 
-    <property name="PROJECT" value="slf4j"/>
+<!-- configuration根节点  -->
+<!-- 属性debug  启动OnConsoleStatusListener -->
+<!-- 属性scan 启动ReconfigureOnChangeTask 启动一个定时任务线程池  ReconfigureOnChangeTaskListener 在启动的时候会处理-->
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="logback.xsd"
+               debug="false" scan="true" scanPeriod="30 second">
+
+    <!-- 设置LoggerContext容器的名字 -->
+    <contextName>simple</contextName>
+
+    <!-- 对于容器设置属性，默认scope=LOCAL,还有system和context 这个属性在property好像很少配置，xsd里面好像也没写 -->
+    <property name="PROJECT" value="slf4j" file="aaa.properties"/>
     <property name="ROOT" value="logs/${PROJECT}/"/>
     <property name="FILESIZE" value="50MB"/>
     <property name="MAXHISTORY" value="100"/>
+
+    <!-- 设置一个property参数，key=DATETIME value="格式化以后的时间" -->
     <timestamp key="DATETIME" datePattern="yyyy-MM-dd HH:mm:ss"/>
+
+    <!-- 设置状态监听 如果设置了，在解析过程就会实时处理解析的状态，如果都不处理则最后系统会注册一个ConsoleStatusListener打印所有的信息 -->
+    <statusListener class="org.slf4j.simple.MyStatusListener"/>
+
     <!-- 控制台打印 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="utf-8">
@@ -118,13 +133,11 @@
         </rollingPolicy>
     </appender>
     -->
-    <!-- SQL相关日志输出-->
-    <logger name="org.apache.ibatis" level="INFO" additivity="false"/>
-    <logger name="org.mybatis.spring" level="INFO" additivity="false"/>
-    <logger name="com.github.miemiedev.mybatis.paginator" level="INFO" additivity="false"/>
 
-    <!-- Logger 根目录 -->
+    <!-- 设置了root<Logger>根的日志level-->
+    <!-- 代码支持root里面的level子节点设置level，不建议使用-->
     <root level="DEBUG">
+        <!-- 对于相应的logger设置appender，logger.addAppender,该标签需要在appender后面-->
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="DEBUG"/>
         <appender-ref ref="ERROR"/>
@@ -132,4 +145,14 @@
         <appender-ref ref="INFO"/>
         <appender-ref ref="TRACE"/>
     </root>
+
+    <!-- 设置定义的Logger节点的日志级别-->
+    <!-- 代码支持logger里面的level子节点设置level，不建议使用-->
+    <logger name="org.apache.ibatis" level="INFO" additivity="false">
+        <!-- 对于相应的logger设置appender，logger.addAppender,该标签需要在appender后面-->
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.mybatis.spring" level="INFO" additivity="false"/>
+    <logger name="com.github.miemiedev.mybatis.paginator" level="INFO" additivity="false"/>
+
 </configuration>

@@ -40,6 +40,10 @@ public class EventPlayer {
         return new ArrayList<SaxEvent>(eventList);
     }
 
+    /**
+     * 解析log4j.xml 处理事件播放
+     * @param aSaxEventList
+     */
     public void play(List<SaxEvent> aSaxEventList) {
         eventList = aSaxEventList;
         SaxEvent se;

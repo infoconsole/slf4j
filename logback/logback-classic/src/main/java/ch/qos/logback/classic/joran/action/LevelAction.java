@@ -22,7 +22,7 @@ import ch.qos.logback.core.joran.action.ActionConst;
 import ch.qos.logback.core.joran.spi.InterpretationContext;
 
 /**
- * Action to handle the <level> element nested within <logger> element. 
+ * Action to handle the <level> element nested within <logger> element.
  * 
  * <p>This action is <b>deprecated</b>. Use the level attribute within the logger
  * element.
@@ -33,6 +33,7 @@ public class LevelAction extends Action {
 
     boolean inError = false;
 
+    @Override
     public void begin(InterpretationContext ec, String name, Attributes attributes) {
         Object o = ec.peekObject();
 
@@ -62,6 +63,7 @@ public class LevelAction extends Action {
     public void finish(InterpretationContext ec) {
     }
 
+    @Override
     public void end(InterpretationContext ec, String e) {
     }
 }

@@ -33,6 +33,10 @@ import ch.qos.logback.core.util.Duration;
 import ch.qos.logback.core.util.OptionHelper;
 import ch.qos.logback.core.util.StatusListenerConfigHelper;
 
+/**
+ * @author oldflame-jm
+ */
+@SuppressWarnings("AliEqualsAvoidNull")
 public class ConfigurationAction extends Action {
     static final String INTERNAL_DEBUG_ATTR = "debug";
     static final String PACKAGING_DATA_ATTR = "packagingData";
@@ -43,18 +47,20 @@ public class ConfigurationAction extends Action {
     
     long threshold = 0;
 
+    @Override
     public void begin(InterpretationContext ic, String name, Attributes attributes) {
         threshold = System.currentTimeMillis();
 
         // See LOGBACK-527 (the system property is looked up first. Thus, it overrides
         // the equivalent property in the config file. This reversal of scope priority is justified
         // by the use case: the admin trying to chase rogue config file
+        //-Dlogback.debug
         String debugAttrib = getSystemProperty(DEBUG_SYSTEM_PROPERTY_KEY);
         if (debugAttrib == null) {
             debugAttrib = ic.subst(attributes.getValue(INTERNAL_DEBUG_ATTR));
         }
 
-        if (OptionHelper.isEmpty(debugAttrib) || debugAttrib.equalsIgnoreCase("false") || debugAttrib.equalsIgnoreCase("null")) {
+        if (OptionHelper.isEmpty(debugAttrib) || "false".equalsIgnoreCase(debugAttrib) || "null".equalsIgnoreCase(debugAttrib)) {
             addInfo(INTERNAL_DEBUG_ATTR + " attribute not set");
         } else {
             StatusListenerConfigHelper.addOnConsoleListenerInstance(context, new OnConsoleStatusListener());
@@ -138,6 +144,7 @@ public class ConfigurationAction extends Action {
         return duration;
     }
 
+    @Override
     public void end(InterpretationContext ec, String name) {
         addInfo("End of configuration.");
         ec.popObject();

@@ -50,6 +50,7 @@ public class PropertyAction extends Action {
      * all the properties found in the given file.
      * 
      */
+    @Override
     public void begin(InterpretationContext ec, String localName, Attributes attributes) {
 
         if ("substitutionProperty".equals(localName)) {
@@ -59,9 +60,10 @@ public class PropertyAction extends Action {
         String name = attributes.getValue(NAME_ATTRIBUTE);
         String value = attributes.getValue(VALUE_ATTRIBUTE);
         String scopeStr = attributes.getValue(SCOPE_ATTRIBUTE);
-
+        //设置scope默认LOCAL
         Scope scope = ActionUtil.stringToScope(scopeStr);
 
+        //file属性非空   name&&value&&resource为空就解析file
         if (checkFileAttributeSanity(attributes)) {
             String file = attributes.getValue(FILE_ATTRIBUTE);
             file = ec.subst(file);
@@ -73,9 +75,11 @@ public class PropertyAction extends Action {
             } catch (IOException e1) {
                 addError("Could not read properties file [" + file + "].", e1);
             }
+            //resource属性非空   name&&value&&file为空就解析resource
         } else if (checkResourceAttributeSanity(attributes)) {
             String resource = attributes.getValue(RESOURCE_ATTRIBUTE);
             resource = ec.subst(resource);
+            //通过类加载找
             URL resourceURL = Loader.getResourceBySelfClassLoader(resource);
             if (resourceURL == null) {
                 addError("Could not find resource [" + resource + "].");
@@ -103,6 +107,7 @@ public class PropertyAction extends Action {
         Properties props = new Properties();
         props.load(istream);
         istream.close();
+        //设置Context中的properties的属性
         ActionUtil.setProperties(ec, props, scope);
     }
 
@@ -133,6 +138,7 @@ public class PropertyAction extends Action {
         return (!(OptionHelper.isEmpty(name) || OptionHelper.isEmpty(value)) && (OptionHelper.isEmpty(file) && OptionHelper.isEmpty(resource)));
     }
 
+    @Override
     public void end(InterpretationContext ec, String name) {
     }
 

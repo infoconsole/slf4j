@@ -131,11 +131,16 @@ public abstract class GenericConfigurator extends ContextAwareBase {
 
     protected void buildInterpreter() {
         RuleStore rs = new SimpleRuleStore(context);
+        //绑定Action see  JoranConfigurator
         addInstanceRules(rs);
+        //新建一个解析拦截器
         this.interpreter = new Interpreter(context, rs, initialElementPath());
+        //InterpretationContext(context,new Interpreter)  获取解析器Context
         InterpretationContext interpretationContext = interpreter.getInterpretationContext();
         interpretationContext.setContext(context);
+        //新增了ImplicitRules
         addImplicitRules(interpreter);
+        //注册默认的内嵌规则
         addDefaultNestedComponentRegistryRules(interpretationContext.getDefaultNestedComponentRegistry());
     }
 

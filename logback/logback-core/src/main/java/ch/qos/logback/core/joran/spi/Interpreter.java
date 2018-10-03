@@ -1,13 +1,13 @@
 /**
  * Logback: the reliable, generic, fast and flexible logging framework.
  * Copyright (C) 1999-2015, QOS.ch. All rights reserved.
- *
+ * <p>
  * This program and the accompanying materials are dual-licensed under
  * either the terms of the Eclipse Public License v1.0 as published by
  * the Eclipse Foundation
- *
- *   or (per the licensee's choosing)
- *
+ * <p>
+ * or (per the licensee's choosing)
+ * <p>
  * under the terms of the GNU Lesser General Public License version 2.1
  * as published by the Free Software Foundation.
  */
@@ -35,24 +35,24 @@ import ch.qos.logback.core.spi.ContextAwareImpl;
  * {@code Interpreter} is Joran's main driving class. It extends SAX
  * {@link org.xml.sax.helpers.DefaultHandler DefaultHandler} which invokes
  * various {@link Action actions} according to predefined patterns.
- * 
+ *
  * <p>
  * Patterns are kept in a {@link RuleStore} which is programmed to store and
  * then later produce the applicable actions for a given pattern.
- * 
+ *
  * <p>
  * The pattern corresponding to a top level &lt;a&gt; element is the string
  * "a".
- * 
+ *
  * <p>
  * The pattern corresponding to an element &lt;b&gt; embedded within a top level
  * &lt;a&gt; element is the string {@code "a/b"}.
- * 
+ *
  * <p>
  * The pattern corresponding to an &lt;b&gt; and any level of nesting is
  * "&#42;/b. Thus, the &#42; character placed at the beginning of a pattern
  * serves as a wildcard for the level of nesting.
- * 
+ * <p>
  * Conceptually, this is very similar to the API of commons-digester. Joran
  * offers several small advantages. First and foremost, it offers support for
  * implicit actions which result in a significant leap in flexibility. Second,
@@ -60,9 +60,8 @@ import ch.qos.logback.core.spi.ContextAwareImpl;
  * It does not depend on other APIs, in particular commons-logging which is too
  * unreliable. Last but not least, Joran is quite tiny and is expected to remain
  * so.
- * 
+ *
  * @author Ceki G&uuml;lc&uuml;
- * 
  */
 public class Interpreter {
     private static List<Action> EMPTY_LIST = new Vector<Action>(0);
@@ -78,10 +77,9 @@ public class Interpreter {
     /**
      * The <id>actionListStack</id> contains a list of actions that are executing
      * for the given XML element.
-     * 
+     * <p>
      * A list of actions is pushed by the {link #startElement} and popped by
      * {@link #endElement}.
-     * 
      */
     Stack<List<Action>> actionListStack;
 
@@ -98,6 +96,7 @@ public class Interpreter {
         implicitActions = new ArrayList<ImplicitAction>(3);
         this.elementPath = initialElementPath;
         actionListStack = new Stack<List<Action>>();
+        //时间播放器
         eventPlayer = new EventPlayer(this);
     }
 
@@ -327,7 +326,7 @@ public class Interpreter {
  * When {@link Interpreter} class is used as the origin of an
  * {@link ContextAwareImpl} instance, then XML locator information is lost. This
  * class preserves locator information (as a string).
- * 
+ *
  * @author ceki
  */
 class CAI_WithLocatorSupport extends ContextAwareImpl {

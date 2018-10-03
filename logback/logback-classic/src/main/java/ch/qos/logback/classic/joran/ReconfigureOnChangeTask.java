@@ -28,13 +28,15 @@ public class ReconfigureOnChangeTask extends ContextAwareBase implements Runnabl
     
     
     void addListener(ReconfigureOnChangeTaskListener listener) {
-        if(listeners==null)
+        if(listeners==null) {
             listeners = new ArrayList<ReconfigureOnChangeTaskListener>();
+        }
         listeners.add(listener);
     }
     
     @Override
     public void run() {
+        //触发进入的方法
         fireEnteredRunMethod();
         
         ConfigurationWatchList configurationWatchList = ConfigurationWatchListUtil.getConfigurationWatchList(context);
@@ -78,28 +80,34 @@ public class ReconfigureOnChangeTask extends ContextAwareBase implements Runnabl
     }
 
     private void fireEnteredRunMethod() {
-        if(listeners == null)
+        if(listeners == null) {
             return;
+        }
         
-        for(ReconfigureOnChangeTaskListener listener: listeners)
+        for(ReconfigureOnChangeTaskListener listener: listeners) {
             listener.enteredRunMethod();
+        }
     }
 
     private void fireChangeDetected() {
-        if(listeners == null)
+        if(listeners == null) {
             return;
+        }
         
-        for(ReconfigureOnChangeTaskListener listener: listeners)
+        for(ReconfigureOnChangeTaskListener listener: listeners) {
             listener.changeDetected();
+        }
     }
 
 
     private void fireDoneReconfiguring() {
-        if(listeners == null)
+        if(listeners == null) {
             return;
+        }
         
-        for(ReconfigureOnChangeTaskListener listener: listeners)
+        for(ReconfigureOnChangeTaskListener listener: listeners) {
             listener.doneReconfiguring();
+        }
     }
 
     private void performXMLConfiguration(LoggerContext lc, URL mainConfigurationURL) {
@@ -123,12 +131,14 @@ public class ReconfigureOnChangeTask extends ContextAwareBase implements Runnabl
 
     private List<SaxEvent> removeIncludeEvents(List<SaxEvent> unsanitizedEventList) {
         List<SaxEvent> sanitizedEvents = new ArrayList<SaxEvent>();
-        if (unsanitizedEventList == null)
+        if (unsanitizedEventList == null) {
             return sanitizedEvents;
+        }
 
         for (SaxEvent e : unsanitizedEventList) {
-            if (!"include".equalsIgnoreCase(e.getLocalName()))
+            if (!"include".equalsIgnoreCase(e.getLocalName())) {
                 sanitizedEvents.add(e);
+            }
 
         }
         return sanitizedEvents;
